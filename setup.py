@@ -13,9 +13,10 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/zenje/chinese-english-lookup",
     packages=setuptools.find_packages(),
+    include_package_data=True,
     entry_points={
         "console_scripts": [
-            "chinese-english-lookup = chinese-english-lookup.__main__:main"
+            "chinese-english-lookup=chinese_english_lookup.__main__:main"
         ]
     },
     classifiers=[
