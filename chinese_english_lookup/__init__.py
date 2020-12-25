@@ -1,1 +1,1 @@
-from .parse import populate_words_dict
+from .dictionary import Dictionary

@@ -1,12 +1,11 @@
 import random
 
-from .parse import populate_words_dict
+from .dictionary import Dictionary
 
 
 def main():
-    words_dict = populate_words_dict()
+    dictionary = Dictionary()
     word_lookup = ""
-    words_dict_list = list(words_dict.values())
 
     while word_lookup != "!":
         word_lookup = input(
@@ -14,14 +13,14 @@ def main():
         ).strip()
 
         if word_lookup != "!" and word_lookup != "random":
-            found_word = words_dict.get(word_lookup)
+            found_word = dictionary.lookup(word_lookup)
             if found_word is not None:
-                print(str(found_word) + "\n" + found_word.get_definitions())
+                print(str(found_word) + "\n" + found_word.definitions)
             else:
                 print("Not found")
         elif word_lookup == "random":
-            random_word_entry = random.choice(words_dict_list)
-            print(str(random_word_entry) + "\n" + random_word_entry.get_definitions())
+            random_word_entry = dictionary.random_entry()
+            print(str(random_word_entry) + "\n" + random_word_entry.definitions)
 
 
 if __name__ == "__main__":
