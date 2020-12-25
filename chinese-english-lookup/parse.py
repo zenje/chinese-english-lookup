@@ -1,27 +1,15 @@
-import random
+import os
+
+from wordentry import WordEntry
+
+dirname = os.path.dirname(__file__)
+cedict_file = os.path.join(dirname, "cedict/cedict_1_0_ts_utf-8_mdbg.txt")
 
 
-class WordEntry:
-    def __init__(self, simp, trad, pinyin, definitions):
-        self.simp = simp
-        self.trad = trad
-        self.pinyin = pinyin
-        self.definitions = definitions
-
-    def __str__(self):
-        return self.simp + " | " + self.trad + "【" + self.pinyin + "】"
-
-    def get_definitions(self):
-        return "; ".join(str(x) for x in self.definitions)
-
-
-# num_lines = sum(1 for line in open('data/cedict_1_0_ts_utf-8_mdbg.txt'))
-# print(num_lines)
-
-
-def main():
+def populate_words_dict():
     words_dict = {}
-    with open("../cedict/cedict_1_0_ts_utf-8_mdbg.txt") as file:
+
+    with open(cedict_file) as file:
         for line in file:
             if line.startswith("#"):
                 continue
@@ -39,6 +27,11 @@ def main():
             words_dict[simp] = new_word_entry
             words_dict[trad] = new_word_entry
 
+    return words_dict
+
+
+def main():
+    words_dict = populate_words_dict()
     word_lookup = ""
     words_dict_list = list(words_dict.values())
 
