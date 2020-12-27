@@ -5,7 +5,13 @@ class WordEntry:
         self.definition_entries = []
 
     def __str__(self):
-        return self.simp + " | " + self.trad
+        return (
+            self.simp
+            + " | "
+            + self.trad
+            + "\n"
+            + self.get_definition_entries_formatted()
+        )
 
     def add_definition_entry(self, definition_entry):
         self.definition_entries.append(definition_entry)
