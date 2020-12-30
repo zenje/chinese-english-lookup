@@ -2,7 +2,7 @@
 
 A simple Python package for Chinese-to-English word definition retrieval. Definitions sourced from Chinese-English dictionary [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cc-cedict).
 
-Also includes utility for HSK3.0 (post-2020).
+Also includes utility for HSK3.0 (post-2020) and HSK2.0 (2010-2020).
 
 ## Installation
 
@@ -12,7 +12,7 @@ pip install chinese-english-lookup
 
 ## Usage
 
-### Running CLI demo
+### Running CLI demo for Dictionary
 
 Run command `chinese-english-lookup`:
 
@@ -33,7 +33,7 @@ Look up a Chinese word, type 'random', or type '!' to quit: random
 
 (**Please note**: package name `chinese_english_lookup` contains underscores rather than hyphens)
 
-```bash
+```python3
 >>> from chinese_english_lookup import Dictionary
 >>> d = Dictionary()
 >>> word_entry = d.lookup('牛油果')
@@ -56,21 +56,40 @@ Look up a Chinese word, type 'random', or type '!' to quit: random
 
 ### Using HSK3 utility
 
-```
+```python3
 >>> from chinese_english_lookup import HSK3
 >>> hsk3 = HSK3()
 >>> intermediate_words = hsk3.get_intermediate()
 >>> len(intermediate_words)
 3167
 >>> for word in intermediate_words:
-...     print(str(word))
-```
+...     print(str(word))    # output omitted
 
-```
->>> from chinese_english_lookup import HSK3
->>> hsk3 = HSK3()
+>>> print(intermediate_words[0])
+阿姨 | 阿姨
+【a1 yi2】 maternal aunt; step-mother; childcare worker; nursemaid; woman of similar age to one's parents (term of address used by child); CL:個|个[ge4]
+
 >>> hsk3.get_category_for_word('醉')
 '中级 - Intermediate Level'
+```
+
+### Using HSK2 utility
+
+```python3
+>>> from chinese_english_lookup import HSK2
+>>> hsk2 = HSK2()
+>>> level_4_words = hsk2.get_words_for_level(4)
+>>> len(level_4_words)
+598
+>>> for word in level_4_words:
+...     print(str(word))    # output omitted
+
+>>> print(level_for_words[0])
+爱情 | 愛情
+【ai4 qing2】 romance; love (romantic); CL:個|个[ge4],份[fen4]
+
+>>> hsk2.get_level_for_word('梦')
+4
 ```
 
 ## License
