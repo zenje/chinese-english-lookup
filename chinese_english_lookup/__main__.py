@@ -4,6 +4,8 @@ from .dictionary import Dictionary
 
 
 def main():
+    """CLI demo of Dictionary, demonstrating Chinese word lookup with CC-CEDICT. Runs with command `chinese-english-lookup`."""
+
     dictionary = Dictionary()
     word_lookup = ""
 

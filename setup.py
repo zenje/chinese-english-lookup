@@ -4,11 +4,11 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="chinese-english-lookup-zenje",
+    name="chinese-english-lookup",
     version="0.0.1",
     author="zenje",
     author_email="jessicaczeng@gmail.com",
-    description="look up Chinese words, return English definitions; parses CC-CEDICT",
+    description="Allows look-up of Chinese words, returning English definitions; parses CC-CEDICT; provides HSK3.0 and HSK2.0 utilities.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/zenje/chinese-english-lookup",

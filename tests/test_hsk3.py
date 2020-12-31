@@ -3,23 +3,35 @@ import pytest
 from chinese_english_lookup import HSK3
 from chinese_english_lookup import HSK3Category as Category
 
-hsk3 = HSK3()
+
+@pytest.fixture
+def hsk3():
+    return HSK3()
 
 
-def test_word_counts():
-    entry_words = hsk3.get_entry()
-    intermediate_words = hsk3.get_intermediate()
-    advanced_words = hsk3.get_advanced()
-    supplemental_words = hsk3.get_supplemental()
+@pytest.mark.parametrize(
+    "get_words_method_to_call, expected_word_count",
+    [
+        ("get_entry", 2226),
+        ("get_intermediate", 3167),
+        ("get_advanced", 4093),
+        ("get_supplemental", 1409),
+    ],
+)
+def test_word_counts(hsk3, get_words_method_to_call, expected_word_count):
+    # invoke method by name
+    words = getattr(hsk3, get_words_method_to_call)()
+    assert len(words) == expected_word_count
 
-    assert len(entry_words) == 2226
-    assert len(intermediate_words) == 3167
-    assert len(advanced_words) == 4093
-    assert len(supplemental_words) == 1409
 
-
-def test_get_category_for_word():
-    assert hsk3.get_category_for_word("天空") == Category.ENTRY.title
-    assert hsk3.get_category_for_word("巧克力") == Category.INTERMEDIATE.title
-    assert hsk3.get_category_for_word("灯笼") == Category.ADVANCED.title
-    assert hsk3.get_category_for_word("粽子") == Category.SUPPLEMENTAL.title
+@pytest.mark.parametrize(
+    "word, expected_category",
+    [
+        ("天空", Category.ENTRY),
+        ("巧克力", Category.INTERMEDIATE),
+        ("灯笼", Category.ADVANCED),
+        ("粽子", Category.SUPPLEMENTAL),
+    ],
+)
+def test_get_category_for_word(hsk3, word, expected_category):
+    assert hsk3.get_category_for_word(word) == expected_category.title

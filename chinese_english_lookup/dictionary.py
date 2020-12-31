@@ -5,11 +5,20 @@ from .wordentry import WordEntry, DefinitionEntry
 
 
 class Dictionary:
+    """Utility for Chinese-English dictionary CC-CEDICT.
+
+    Parses CC-CEDICT, allows for lookup of Chinese characters.
+    """
+
     def __init__(self):
         self.words_dict = {}
         self.parse()
 
     def parse(self):
+        """Parses the CC-CEDICT file.
+
+        Parses CC-CEDICT, transforming each Chinese word-definition entry into a WordEntry. These are stored within a dict, with both simplified and traditional words as keys. Called when first initializing the Dictionary instance.
+        """
         words_dict = {}
 
         dirname = os.path.dirname(__file__)
@@ -44,7 +53,20 @@ class Dictionary:
         self.words_dict_list = list(words_dict.values())
 
     def lookup(self, word):
+        """Looks up a Chinese word in the dictionary.
+
+        Args:
+            word: The string of the Chinese word to look up (can be multiple characters).
+
+        Returns:
+            The WordEntry object corresponding to the word to find, if present in dictionary. Otherwise, returns None.
+        """
         return self.words_dict.get(word.strip())
 
     def random_entry(self):
+        """Returns a random Chinese word entry from the dictionary.
+
+        Returns:
+            The a random WordEntry object.
+        """
         return random.choice(self.words_dict_list)
