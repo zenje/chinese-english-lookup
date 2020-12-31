@@ -12,6 +12,7 @@ class Dictionary:
 
     def __init__(self):
         self.words_dict = {}
+        self.parsed = False
         self.parse()
 
     def parse(self):
@@ -19,6 +20,9 @@ class Dictionary:
 
         Parses CC-CEDICT, transforming each Chinese word-definition entry into a WordEntry. These are stored within a dict, with both simplified and traditional words as keys. Called when first initializing the Dictionary instance.
         """
+        if self.parsed:
+            return
+
         words_dict = {}
 
         dirname = os.path.dirname(__file__)
@@ -51,6 +55,7 @@ class Dictionary:
 
         self.words_dict = words_dict
         self.words_dict_list = list(words_dict.values())
+        self.parsed = True
 
     def lookup(self, word):
         """Looks up a Chinese word in the dictionary.

@@ -15,7 +15,9 @@ class HSK2:
         dictionary: Optional Dictionary instance. If not provided, a new Dictionary instance will be instantiated.
     """
 
-    def __init__(self, dictionary: Dictionary = Dictionary()):
+    def __init__(self, dictionary: Dictionary = None):
+        if dictionary is None:
+            dictionary = Dictionary()
         self.level_list = []  # contains levels to lists of WordEntry
         self.word_to_level_map = {}  # for retrieving level of given word
         self.dictionary = dictionary

@@ -18,7 +18,6 @@
 
 from .dictionary import Dictionary
 from .hsk2 import HSK2
-from .hsk3 import HSK3
-from .hsk3 import Category as HSK3Category
+from .hsk3 import HSK3, Category as HSK3Category
 
 __all__ = ["Dictionary", "HSK2", "HSK3", "HSK3Category"]

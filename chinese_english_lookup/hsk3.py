@@ -39,7 +39,9 @@ class HSK3:
         dictionary: Optional Dictionary instance. If not provided, a new Dictionary instance will be instantiated.
     """
 
-    def __init__(self, dictionary: Dictionary = Dictionary()):
+    def __init__(self, dictionary: Dictionary = None):
+        if dictionary is None:
+            dictionary = Dictionary()
         self.category_list = []  # contains categories to lists of WordEntry
         self.word_to_category_map = {}  # for retrieving category of given word
         self.dictionary = dictionary
