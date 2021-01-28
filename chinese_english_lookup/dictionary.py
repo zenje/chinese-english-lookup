@@ -11,7 +11,9 @@ class Dictionary:
     """
 
     def __init__(self):
-        self.words_dict = {}
+        self.words_dict_simp = {}
+        self.words_dict_trad = {}
+        self.word_entries = []
         self.parsed = False
         self.parse()
 
@@ -23,7 +25,9 @@ class Dictionary:
         if self.parsed:
             return
 
-        words_dict = {}
+        words_dict_simp = {}  # look up words by simplified form
+        words_dict_trad = {}  # look up words by traditional form
+        word_entries = []  # list of all word entries
 
         dirname = os.path.dirname(__file__)
         cedict_file = os.path.join(dirname, "cedict/cedict_1_0_ts_utf-8_mdbg.txt")
@@ -43,19 +47,31 @@ class Dictionary:
                 definitions = py_and_def_tuple[2].strip(" /").split("/")
                 definition_entry = DefinitionEntry(pinyin, definitions)
 
-                if simp not in words_dict:
+                if simp not in words_dict_simp:
+                    # handle the first time a word is encountered
                     new_word_entry = WordEntry(simp, trad)
+                    word_entries.append(new_word_entry)
                     new_word_entry.add_definition_entry(definition_entry)
-                    words_dict[simp] = new_word_entry
+                    words_dict_simp[simp] = new_word_entry
                     if simp != trad:
-                        words_dict[trad] = new_word_entry
+                        words_dict_trad[trad] = new_word_entry
                 else:
                     # certain words may have different pinyin and associated definitions (e.g., 好 = hao3, hao4)
-                    words_dict.get(simp).add_definition_entry(definition_entry)
+                    words_dict_simp.get(simp).add_definition_entry(definition_entry)
 
-        self.words_dict = words_dict
-        self.words_dict_list = list(words_dict.values())
+        self.words_dict_simp = words_dict_simp
+        self.words_dict_trad = words_dict_trad
+        self.word_entries = word_entries
+        self.words_dict_list = list(words_dict_simp.values())
         self.parsed = True
+
+    def get_words(self):
+        """Get all word entries in the dictionary.
+
+        Returns:
+            A list of all WordEntries in the dictionary.
+        """
+        return self.word_entries
 
     def lookup(self, word):
         """Looks up a Chinese word in the dictionary.
@@ -66,12 +82,17 @@ class Dictionary:
         Returns:
             The WordEntry object corresponding to the word to find, if present in dictionary. Otherwise, returns None.
         """
-        return self.words_dict.get(word.strip())
+        word = word.strip()
+        return (
+            self.words_dict_simp.get(word)
+            if (word in self.words_dict_simp)
+            else self.words_dict_trad.get(word)
+        )
 
     def random_entry(self):
         """Returns a random Chinese word entry from the dictionary.
 
         Returns:
-            The a random WordEntry object.
+            A random WordEntry object.
         """
         return random.choice(self.words_dict_list)

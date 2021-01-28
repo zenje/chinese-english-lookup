@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="chinese-english-lookup",
-    version="0.0.2",
+    version="0.0.3",
     author="zenje",
     author_email="jessicaczeng@gmail.com",
     description="Allows look-up of Chinese words, returning English definitions; parses CC-CEDICT; provides HSK3.0 and HSK2.0 utilities.",
