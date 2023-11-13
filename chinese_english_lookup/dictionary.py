@@ -32,7 +32,7 @@ class Dictionary:
         dirname = os.path.dirname(__file__)
         cedict_file = os.path.join(dirname, "cedict/cedict_1_0_ts_utf-8_mdbg.txt")
 
-        with open(cedict_file) as file:
+        with open(cedict_file, encoding='utf-8') as file:
             for line in file:
                 if line.startswith("#"):
                     continue
